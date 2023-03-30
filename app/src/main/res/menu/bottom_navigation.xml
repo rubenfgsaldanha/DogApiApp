@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dogBreedImagesListFragment"
+        android:icon="@drawable/list_icon"
+        android:title="@string/bottom_menu_list" />
+    <!--android:iconTint=""-->
+
+    <item
+        android:id="@+id/graphsFragment"
+        android:icon="@drawable/search_icon"
+        android:title="@string/bottom_menu_search" />
+
+</menu>

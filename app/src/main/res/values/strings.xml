@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DogApiApp</string>
+    <string name="bottom_menu_list">Images list</string>
+    <string name="bottom_menu_search">Search by name</string>
 </resources>

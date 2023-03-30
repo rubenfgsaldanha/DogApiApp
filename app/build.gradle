@@ -1,6 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id "androidx.navigation.safeargs"
+    id 'kotlin-android-extensions'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -15,6 +19,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "BASE_URL_DOG_API", "\"https://api.thedogapi.com/v1/\""
+        buildConfigField "String", "API_KEY", "\"live_oICpmPS37JOoNTyhRwlzL68CBaSZ7ubN4S28bOE9RcIDsEd4ZKTWMXS66VqCYVLa\""
     }
 
     buildTypes {
@@ -30,15 +36,35 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation "androidx.core:core-ktx:$version_core"
+    implementation "androidx.appcompat:appcompat:$version_appcompat"
+    implementation "com.google.android.material:material:$version_material"
+    implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
+
+    implementation "com.google.dagger:hilt-android:$version_dagger_hilt"
+    kapt "com.google.dagger:hilt-compiler:$version_dagger_hilt"
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
+
+    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
+
+    implementation "io.reactivex.rxjava3:rxjava:$version_rxjava"
+
+    testImplementation "junit:junit:$version_junit"
+    androidTestImplementation "androidx.test.ext:junit:$version_junit_ext"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso"
+}
+
+kapt {
+    correctErrorTypes true
 }
