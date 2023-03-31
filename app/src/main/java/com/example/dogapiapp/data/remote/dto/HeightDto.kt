@@ -1,8 +1,8 @@
 package com.example.dogapiapp.data.remote.dto
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class HeightDto(
-    @Json(name = "imperial") val imperial: String,
-    @Json(name = "metric") val metric: String,
+    @SerializedName("imperial") val imperial: String?,
+    @SerializedName("metric") val metric: String?,
 )

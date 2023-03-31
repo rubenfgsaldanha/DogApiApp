@@ -1,10 +1,10 @@
 package com.example.dogapiapp.data.remote.dto
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class ImageDto(
-    @Json(name = "height") val height: Int,
-    @Json(name = "id") val id: String,
-    @Json(name = "url") val url: String,
-    @Json(name = "width") val width: Int,
+    @SerializedName("height") val height: Int?,
+    @SerializedName("id") val id: String,
+    @SerializedName("url") val url: String?,
+    @SerializedName("width") val width: Int?,
 )

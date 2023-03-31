@@ -1,4 +1,4 @@
-package com.example.dogapiapp.data.local.dbmodels
+package com.example.dogapiapp.data.local.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -10,8 +10,8 @@ data class WeightDbModel(
     val id: Long = 0L,
 
     @ColumnInfo(name = "imperial")
-    val imperial: String,
+    val imperial: String?,
 
     @ColumnInfo(name = "metric")
-    val metric: String,
+    val metric: String?,
 )

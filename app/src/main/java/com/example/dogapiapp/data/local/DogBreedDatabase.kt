@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.dogapiapp.data.local.converters.DogBreedConverters
 import com.example.dogapiapp.data.local.dao.DogBreedDao
-import com.example.dogapiapp.data.local.dbmodels.*
+import com.example.dogapiapp.data.local.model.*
 
 @Database(
     entities = [

@@ -1,4 +1,4 @@
-package com.example.dogapiapp.data.local.dbmodels
+package com.example.dogapiapp.data.local.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -12,38 +12,38 @@ data class DogBreedDbModel(
     val id: Long = 0L,
 
     @ColumnInfo(name = "bred_for")
-    val bredFor: String,
+    val bredFor: String?,
 
     @ColumnInfo(name = "breed_group")
-    val breedGroup: String,
+    val breedGroup: String?,
 
     @TypeConverters(DogBreedConverters::class)
     @ColumnInfo(name = "height")
-    val height: HeightDbModel,
+    val height: HeightDbModel?,
 
     @ColumnInfo(name = "breed_id")
     val breedId: Int,
 
     @TypeConverters(DogBreedConverters::class)
     @ColumnInfo(name = "image")
-    val image: ImageDbModel,
+    val image: ImageDbModel?,
 
     @ColumnInfo(name = "life_span")
-    val lifeSpan: String,
+    val lifeSpan: String?,
 
     @ColumnInfo(name = "name")
-    val name: String,
+    val name: String?,
 
     @ColumnInfo(name = "origin")
-    val origin: String,
+    val origin: String?,
 
     @ColumnInfo(name = "reference_image_id")
-    val referenceImageId: String,
+    val referenceImageId: String?,
 
     @ColumnInfo(name = "temperament")
-    val temperament: String,
+    val temperament: String?,
 
     @TypeConverters(DogBreedConverters::class)
     @ColumnInfo(name = "weight")
-    val weight: WeightDbModel,
+    val weight: WeightDbModel?,
 )

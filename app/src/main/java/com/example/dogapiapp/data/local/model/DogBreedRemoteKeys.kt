@@ -1,4 +1,4 @@
-package com.example.dogapiapp.data.local.dbmodels
+package com.example.dogapiapp.data.local.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

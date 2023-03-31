@@ -1,49 +1,59 @@
 package com.example.dogapiapp.data.local.converters
 
 import androidx.room.TypeConverter
-import com.example.dogapiapp.data.local.dbmodels.HeightDbModel
-import com.example.dogapiapp.data.local.dbmodels.ImageDbModel
-import com.example.dogapiapp.data.local.dbmodels.WeightDbModel
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
+import com.example.dogapiapp.data.local.model.HeightDbModel
+import com.example.dogapiapp.data.local.model.ImageDbModel
+import com.example.dogapiapp.data.local.model.WeightDbModel
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 object DogBreedConverters {
 
-    private val moshi = Moshi.Builder().build()
+    @TypeConverter
+    @JvmStatic
+    fun fromHeightToJson(height: HeightDbModel?): String? =
+        height?.let {
+            Gson().toJson(it)
+        }
 
     @TypeConverter
-    fun fromHeightToJson(height: HeightDbModel?): String? {
-        val jsonAdapter: JsonAdapter<HeightDbModel> = moshi.adapter(HeightDbModel::class.java)
-        return jsonAdapter.toJson(height)
-    }
-
-    @TypeConverter
+    @JvmStatic
     fun fromJsonToHeight(jsonString: String?): HeightDbModel? {
-        val jsonAdapter: JsonAdapter<HeightDbModel> = moshi.adapter(HeightDbModel::class.java)
-        return jsonString?.let { jsonAdapter.fromJson(it) }
+        val type = object : TypeToken<HeightDbModel?>() {}.type
+        return jsonString?.let {
+            Gson().fromJson(jsonString, type)
+        }
     }
 
     @TypeConverter
-    fun fromWeightToJson(weight: WeightDbModel?): String? {
-        val jsonAdapter: JsonAdapter<WeightDbModel> = moshi.adapter(WeightDbModel::class.java)
-        return jsonAdapter.toJson(weight)
-    }
+    @JvmStatic
+    fun fromWeightToJson(weight: WeightDbModel?): String? =
+        weight?.let {
+            Gson().toJson(it)
+        }
 
     @TypeConverter
+    @JvmStatic
     fun fromJsonToWeight(jsonString: String?): WeightDbModel? {
-        val jsonAdapter: JsonAdapter<WeightDbModel> = moshi.adapter(WeightDbModel::class.java)
-        return jsonString?.let { jsonAdapter.fromJson(it) }
+        val type = object : TypeToken<WeightDbModel?>() {}.type
+        return jsonString?.let {
+            Gson().fromJson(jsonString, type)
+        }
     }
 
     @TypeConverter
-    fun fromImageToJson(image: ImageDbModel?): String? {
-        val jsonAdapter: JsonAdapter<ImageDbModel> = moshi.adapter(ImageDbModel::class.java)
-        return jsonAdapter.toJson(image)
-    }
+    @JvmStatic
+    fun fromImageToJson(image: ImageDbModel?): String? =
+        image?.let {
+            Gson().toJson(image)
+        }
 
     @TypeConverter
+    @JvmStatic
     fun fromJsonToImage(jsonString: String?): ImageDbModel? {
-        val jsonAdapter: JsonAdapter<ImageDbModel> = moshi.adapter(ImageDbModel::class.java)
-        return jsonString?.let { jsonAdapter.fromJson(it) }
+        val type = object : TypeToken<ImageDbModel?>() {}.type
+        return jsonString?.let {
+            Gson().fromJson(jsonString, type)
+        }
     }
 }

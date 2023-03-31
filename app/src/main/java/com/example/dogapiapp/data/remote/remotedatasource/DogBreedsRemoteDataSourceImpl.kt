@@ -1,29 +1,37 @@
 package com.example.dogapiapp.data.remote.remotedatasource
 
-import com.example.dogapiapp.BuildConfig
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.rxjava2.flowable
+import com.example.dogapiapp.data.local.DogBreedDatabase
+import com.example.dogapiapp.data.local.model.DogBreedDbModel
+import com.example.dogapiapp.data.remote.DogBreedRxRemoteMediator
 import com.example.dogapiapp.data.remote.api.DogApi
-import com.example.dogapiapp.data.remote.dto.DogBreedDto
-import com.example.dogapiapp.model.DogBreedModel
-import io.reactivex.rxjava3.core.Single
-import retrofit2.http.HeaderMap
+import io.reactivex.Flowable
 import javax.inject.Inject
 
 class DogBreedsRemoteDataSourceImpl @Inject constructor(
+    private val database: DogBreedDatabase,
     private val dogApi: DogApi,
 ): DogBreedsRemoteDataSource {
 
-    override suspend fun getDogBreeds(): Single<List<DogBreedModel>> {
-        val headers = hashMapOf("x-api-key" to BuildConfig.API_KEY)
+    companion object{
+        const val PAGE_SIZE = 20
+        const val PREFETCH_DISTANCE = 1
+    }
 
-        return dogApi.getDogBreeds(
-            url = BuildConfig.BASE_URL_DOG_API,
-            headers = headers,
-        )
-            .onErrorResumeNext {
-                Single.error(it)
-            }
-            .flatMap {
-                Single.just(it.toDogBreedModel())
-            }
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getDogBreedsWithPagination(): Flowable<PagingData<DogBreedDbModel>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                enablePlaceholders = false,
+                prefetchDistance = PREFETCH_DISTANCE
+            ),
+            remoteMediator = DogBreedRxRemoteMediator(database, dogApi),
+            pagingSourceFactory = { database.dogBreedDao().getDogBreedsFromDb() }
+        ).flowable
     }
 }

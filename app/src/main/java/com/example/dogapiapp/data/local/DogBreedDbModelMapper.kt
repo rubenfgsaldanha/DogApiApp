@@ -1,47 +1,47 @@
 package com.example.dogapiapp.data.local
 
-import com.example.dogapiapp.data.local.dbmodels.DogBreedDbModel
-import com.example.dogapiapp.data.local.dbmodels.HeightDbModel
-import com.example.dogapiapp.data.local.dbmodels.ImageDbModel
-import com.example.dogapiapp.data.local.dbmodels.WeightDbModel
-import com.example.dogapiapp.model.DogBreedModel
-import com.example.dogapiapp.model.HeightModel
-import com.example.dogapiapp.model.ImageModel
-import com.example.dogapiapp.model.WeightModel
+import com.example.dogapiapp.data.local.model.DogBreedDbModel
+import com.example.dogapiapp.data.local.model.HeightDbModel
+import com.example.dogapiapp.data.local.model.ImageDbModel
+import com.example.dogapiapp.data.local.model.WeightDbModel
+import com.example.dogapiapp.data.remote.dto.DogBreedDto
+import com.example.dogapiapp.data.remote.dto.HeightDto
+import com.example.dogapiapp.data.remote.dto.ImageDto
+import com.example.dogapiapp.data.remote.dto.WeightDto
 
-fun List<DogBreedModel>.toDogBreedDbModelList() =
+fun List<DogBreedDto>.toDogBreedDbModelList() =
     map {
         it.toDogBreedDbModel()
     }
 
-fun DogBreedModel.toDogBreedDbModel() =
+fun DogBreedDto.toDogBreedDbModel() =
     DogBreedDbModel(
         bredFor = bredFor,
         breedGroup = breedGroup,
-        height = height.toHeightDbModel(),
+        height = height?.toHeightDbModel(),
         breedId = id,
-        image = image.toImageDbModel(),
+        image = image?.toImageDbModel(),
         lifeSpan = lifeSpan,
         name = name,
         origin = origin,
         referenceImageId = referenceImageId,
         temperament = temperament,
-        weight = weight.toWeightDbModel(),
+        weight = weight?.toWeightDbModel(),
     )
 
-fun HeightModel.toHeightDbModel() =
+fun HeightDto.toHeightDbModel() =
     HeightDbModel(
         imperial = imperial,
         metric = metric,
     )
 
-fun WeightModel.toWeightDbModel() =
+fun WeightDto.toWeightDbModel() =
     WeightDbModel(
         imperial = imperial,
         metric = metric,
     )
 
-fun ImageModel.toImageDbModel() =
+fun ImageDto.toImageDbModel() =
     ImageDbModel(
         height = height,
         imageId = id,

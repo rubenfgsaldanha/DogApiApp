@@ -5,15 +5,14 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.dogapiapp.data.local.dbmodels.DogBreedDbModel
-import com.example.dogapiapp.data.local.dbmodels.DogBreedRemoteKeys
-import com.example.dogapiapp.model.DogBreedModel
+import com.example.dogapiapp.data.local.model.DogBreedDbModel
+import com.example.dogapiapp.data.local.model.DogBreedRemoteKeys
 
 @Dao
 interface DogBreedDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(dogBreeds: List<DogBreedModel>)
+    fun insertAll(dogBreeds: List<DogBreedDbModel>)
 
     @Query("select * from dog_breeds")
     fun getDogBreedsFromDb(): PagingSource<Int, DogBreedDbModel>
