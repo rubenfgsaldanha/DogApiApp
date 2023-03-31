@@ -7,7 +7,7 @@ import com.example.dogapiapp.requirement1.model.DogBreedUiModel
 
 fun DogBreedDbModel.toDogBreedUiModel() =
     DogBreedUiModel(
-        id = breedId,
+        id = id,
         name = name,
         imageUrl = image?.url,
     )

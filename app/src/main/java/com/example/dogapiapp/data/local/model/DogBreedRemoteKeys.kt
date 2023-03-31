@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "dog_breeds_remote_keys")
 data class DogBreedRemoteKeys(
     @PrimaryKey(autoGenerate = false)
-    val id: Long,
+    val id: Int,
 
     @ColumnInfo(name = "previous_key")
     val previousKey: Int?,

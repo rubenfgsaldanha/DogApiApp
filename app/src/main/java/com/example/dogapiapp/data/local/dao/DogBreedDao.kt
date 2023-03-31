@@ -24,7 +24,7 @@ interface DogBreedDao {
     fun insertAllRemoteKeys(remoteKeys: List<DogBreedRemoteKeys>)
 
     @Query("select * from dog_breeds_remote_keys where id = :id")
-    fun getDogBreedRemoteKeyById(id: Long): DogBreedRemoteKeys?
+    fun getDogBreedRemoteKeyById(id: Int): DogBreedRemoteKeys?
 
     @Query("delete from dog_breeds_remote_keys")
     fun deleteAllRemoteKeys()

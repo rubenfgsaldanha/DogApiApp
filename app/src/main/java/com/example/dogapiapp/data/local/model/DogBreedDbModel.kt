@@ -8,8 +8,8 @@ import com.example.dogapiapp.data.local.converters.DogBreedConverters
 
 @Entity(tableName = "dog_breeds")
 data class DogBreedDbModel(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0L,
+    @PrimaryKey(autoGenerate = false)
+    val id: Int,
 
     @ColumnInfo(name = "bred_for")
     val bredFor: String?,
@@ -20,9 +20,6 @@ data class DogBreedDbModel(
     @TypeConverters(DogBreedConverters::class)
     @ColumnInfo(name = "height")
     val height: HeightDbModel?,
-
-    @ColumnInfo(name = "breed_id")
-    val breedId: Int,
 
     @TypeConverters(DogBreedConverters::class)
     @ColumnInfo(name = "image")

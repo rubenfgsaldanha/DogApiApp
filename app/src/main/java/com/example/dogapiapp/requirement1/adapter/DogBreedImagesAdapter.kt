@@ -2,17 +2,23 @@ package com.example.dogapiapp.requirement1.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.dogapiapp.databinding.DogBreedImageItemBinding
+import com.example.dogapiapp.databinding.DogBreedImageItemGridBinding
+import com.example.dogapiapp.databinding.DogBreedImageItemLinearBinding
 import com.example.dogapiapp.requirement1.model.DogBreedUiModel
 
+const val LINEAR_LAYOUT = 1
+const val GRID_LAYOUT = 2
+
 class DogBreedImagesAdapter(
+    var layoutType: Int,
     private val onItemClick: (Int) -> Unit,
-): PagingDataAdapter<DogBreedUiModel, DogBreedImagesAdapter.DogBreedImagesViewHolder>(DiffCallback) {
+): PagingDataAdapter<DogBreedUiModel, RecyclerView.ViewHolder>(DiffCallback) {
 
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<DogBreedUiModel>() {
@@ -29,23 +35,33 @@ class DogBreedImagesAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): DogBreedImagesAdapter.DogBreedImagesViewHolder {
+    ): RecyclerView.ViewHolder {
 
-        return DogBreedImagesViewHolder(
-            DogBreedImageItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+        return if (viewType == LINEAR_LAYOUT) {
+            DogBreedImagesLinearViewHolder(
+                DogBreedImageItemLinearBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
-        )
+        } else {
+            DogBreedImagesGridViewHolder(
+                DogBreedImageItemGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
+        }
     }
 
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (layoutType == LINEAR_LAYOUT) {
+            (holder as DogBreedImagesLinearViewHolder).bind(getItem(position))
+        } else {
+            (holder as DogBreedImagesGridViewHolder).bind(getItem(position))
+        }
+    }
 
-    override fun onBindViewHolder(holder: DogBreedImagesAdapter.DogBreedImagesViewHolder, position: Int) = holder.bind(getItem(position))
+    override fun getItemViewType(position: Int): Int {
+        return layoutType
+    }
 
-
-    inner class DogBreedImagesViewHolder(
-        private val binding: DogBreedImageItemBinding
+    inner class DogBreedImagesLinearViewHolder(
+        private val binding: DogBreedImageItemLinearBinding
     ): RecyclerView.ViewHolder(binding.root){
 
         fun bind(item: DogBreedUiModel?){
@@ -55,16 +71,33 @@ class DogBreedImagesAdapter(
                 binding.root.setOnClickListener { onItemClick(item.id) }
 
                 item.imageUrl?.let {
-                    loadImage(item.imageUrl)
+                    loadImage(binding.dogBreedImage, item.imageUrl)
                 }
             }
         }
+    }
 
-        private fun loadImage(url: String){
-            Glide.with(binding.dogBreedImage.context)
-                .load(url)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .into(binding.dogBreedImage)
+    inner class DogBreedImagesGridViewHolder(
+        private val binding: DogBreedImageItemGridBinding
+    ): RecyclerView.ViewHolder(binding.root){
+
+        fun bind(item: DogBreedUiModel?){
+            item?.let {
+                binding.breedNameGrid.text = item.name
+
+                binding.root.setOnClickListener { onItemClick(item.id) }
+
+                item.imageUrl?.let {
+                    loadImage(binding.dogBreedImageGrid, item.imageUrl)
+                }
+            }
         }
+    }
+
+    private fun loadImage(imageView: ImageView, url: String){
+        Glide.with(imageView.context)
+            .load(url)
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .into(imageView)
     }
 }

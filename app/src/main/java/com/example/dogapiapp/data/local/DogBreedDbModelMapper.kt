@@ -16,10 +16,10 @@ fun List<DogBreedDto>.toDogBreedDbModelList() =
 
 fun DogBreedDto.toDogBreedDbModel() =
     DogBreedDbModel(
+        id = id,
         bredFor = bredFor,
         breedGroup = breedGroup,
         height = height?.toHeightDbModel(),
-        breedId = id,
         image = image?.toImageDbModel(),
         lifeSpan = lifeSpan,
         name = name,

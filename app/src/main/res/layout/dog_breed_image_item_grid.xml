@@ -2,26 +2,27 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
+    android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/breedName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="@id/dogBreedImage"
-        app:layout_constraintEnd_toEndOf="@id/dogBreedImage"
-        app:layout_constraintTop_toBottomOf="@id/dogBreedImage"
-        tools:text="This is a breed name"/>
-
     <ImageView
-        android:id="@+id/dogBreedImage"
+        android:id="@+id/dogBreedImageGrid"
         android:layout_width="180dp"
         android:layout_height="130dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/breedNameGrid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@id/dogBreedImageGrid"
+        app:layout_constraintEnd_toEndOf="@id/dogBreedImageGrid"
+        app:layout_constraintTop_toBottomOf="@id/dogBreedImageGrid"
+        tools:text="This is a breed name"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
