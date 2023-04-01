@@ -13,6 +13,7 @@ import com.example.dogapiapp.databinding.FragmentDogBreedImagesListBinding
 import com.example.dogapiapp.requirement1.adapter.DogBreedImagesAdapter
 import com.example.dogapiapp.requirement1.adapter.GRID_LAYOUT
 import com.example.dogapiapp.requirement1.adapter.LINEAR_LAYOUT
+import com.example.dogapiapp.requirement1.domain.OrderType
 import com.example.dogapiapp.requirement1.presentation.DogBreedImagesListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.CompositeDisposable
@@ -73,6 +74,14 @@ class DogBreedImagesListFragment: Fragment() {
 
         binding.buttonGrid.setOnClickListener {
             updateAdapterAndLayoutType(GRID_LAYOUT)
+        }
+
+        binding.buttonOrderDesc.setOnClickListener {
+            viewModel.orderAlphabetically(OrderType.DESC)
+        }
+
+        binding.buttonOrderAsc.setOnClickListener {
+            viewModel.orderAlphabetically(OrderType.ASC)
         }
     }
 

@@ -43,4 +43,7 @@ data class DogBreedDbModel(
     @TypeConverters(DogBreedConverters::class)
     @ColumnInfo(name = "weight")
     val weight: WeightDbModel?,
+
+    @ColumnInfo(name = "sort_order")
+    var sortOrder: Int = 0,
 )

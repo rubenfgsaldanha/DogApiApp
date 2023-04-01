@@ -89,7 +89,7 @@ class DogBreedRxRemoteMediator constructor(
         database.runInTransaction {
             if (loadType == LoadType.REFRESH) {
                 database.dogBreedDao().deleteAllRemoteKeys()
-                database.dogBreedDao().deleteAll()
+                database.dogBreedDao().deleteAllDogBreeds()
             }
 
             val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1

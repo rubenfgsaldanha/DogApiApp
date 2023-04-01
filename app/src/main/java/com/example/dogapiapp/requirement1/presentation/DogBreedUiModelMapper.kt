@@ -10,6 +10,7 @@ fun DogBreedDbModel.toDogBreedUiModel() =
         id = id,
         name = name,
         imageUrl = image?.url,
+        sortOrder = sortOrder,
     )
 
 fun PagingData<DogBreedDbModel>.toPagingDataUiModel() =

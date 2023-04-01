@@ -7,4 +7,8 @@ import io.reactivex.Flowable
 interface DogBreedRepository {
 
     fun getDogBreedsWithPagination(): Flowable<PagingData<DogBreedDbModel>>
+    fun insertAllDogBreeds(dogBreeds: List<DogBreedDbModel>)
+    fun getAllDogBreedsWithoutPagination(): List<DogBreedDbModel>
+    fun deleteAllDogBreeds()
+
 }

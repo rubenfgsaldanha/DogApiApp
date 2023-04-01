@@ -23,7 +23,7 @@ class DogBreedImagesAdapter(
     companion object {
         private val DiffCallback = object : DiffUtil.ItemCallback<DogBreedUiModel>() {
             override fun areItemsTheSame(oldItem: DogBreedUiModel, newItem: DogBreedUiModel): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.id == newItem.id && oldItem.sortOrder == newItem.sortOrder
             }
 
             override fun areContentsTheSame(oldItem: DogBreedUiModel, newItem: DogBreedUiModel): Boolean {

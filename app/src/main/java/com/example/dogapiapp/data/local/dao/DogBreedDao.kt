@@ -14,11 +14,14 @@ interface DogBreedDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(dogBreeds: List<DogBreedDbModel>)
 
-    @Query("select * from dog_breeds")
+    @Query("select * from dog_breeds order by sort_order")
     fun getDogBreedsFromDb(): PagingSource<Int, DogBreedDbModel>
 
+    @Query("select * from dog_breeds")
+    fun getDogBreedsFromDbWithoutPaging(): List<DogBreedDbModel>
+
     @Query("delete from dog_breeds")
-    fun deleteAll()
+    fun deleteAllDogBreeds()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllRemoteKeys(remoteKeys: List<DogBreedRemoteKeys>)
