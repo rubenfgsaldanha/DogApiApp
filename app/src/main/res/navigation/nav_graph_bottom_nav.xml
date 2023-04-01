@@ -24,4 +24,14 @@
             app:argType="integer"
             android:defaultValue="0"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/dogBreedsSearchFragment"
+        android:name="com.example.dogapiapp.requirement2.ui.DogBreedsSearchFragment"
+        android:label="DogBreedsSearchFragment" >
+
+        <action
+            android:id="@+id/action_dogBreedsSearchFragment_to_dogBreedDetailFragment"
+            app:destination="@id/dogBreedDetailFragment" />
+    </fragment>
 </navigation>

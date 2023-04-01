@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
-    android:layout_marginVertical="16dp"
+    android:layout_marginVertical="8dp"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -26,12 +26,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         tools:text="Origin: UK"/>
-
-    <TextView
-        android:id="@+id/temperament"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        tools:text="Temperament: Energetic"/>
 
 </LinearLayout>

@@ -7,7 +7,7 @@
     <!--android:iconTint=""-->
 
     <item
-        android:id="@+id/graphsFragment"
+        android:id="@+id/dogBreedsSearchFragment"
         android:icon="@drawable/search_icon"
         android:title="@string/bottom_menu_search" />
 
