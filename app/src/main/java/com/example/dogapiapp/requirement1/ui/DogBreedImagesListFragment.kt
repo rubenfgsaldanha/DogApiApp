@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dogapiapp.R
@@ -40,17 +41,13 @@ class DogBreedImagesListFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = DogBreedImagesAdapter(LINEAR_LAYOUT) {
-            // TODO add navigation to screen 3
+            findNavController().navigate(
+                DogBreedImagesListFragmentDirections.actionDogBreedImagesListFragmentToDogBreedDetailFragment(dogBreedId = it)
+            )
         }
 
         updateAdapterAndLayoutType(LINEAR_LAYOUT)
         binding.dogBreedImages.adapter = adapter
-
-        mDisposable.add(
-            viewModel.getDogBreeds().subscribe {
-                adapter.submitData(lifecycle, it)
-            }
-        )
 
         setupClickListeners()
     }
@@ -85,8 +82,18 @@ class DogBreedImagesListFragment: Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        mDisposable.dispose()
-        super.onDestroyView()
+    override fun onStart() {
+        super.onStart()
+
+        mDisposable.add(
+            viewModel.getDogBreeds().subscribe {
+                adapter.submitData(lifecycle, it)
+            }
+        )
+    }
+
+    override fun onStop() {
+        mDisposable.clear()
+        super.onStop()
     }
 }

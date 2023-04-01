@@ -2,4 +2,9 @@
     <string name="app_name">DogApiApp</string>
     <string name="bottom_menu_list">Images list</string>
     <string name="bottom_menu_search">Search by name</string>
+
+    <string name="breed_name_text">Breed name: </string>
+    <string name="breed_group_text">Breed group: </string>
+    <string name="origin_text">Origin: </string>
+    <string name="temperament_text">Temperament: </string>
 </resources>

@@ -7,5 +7,21 @@
     <fragment
         android:id="@+id/dogBreedImagesListFragment"
         android:name="com.example.dogapiapp.requirement1.ui.DogBreedImagesListFragment"
-        android:label="DogBreedImagesListFragment" />
+        android:label="DogBreedImagesListFragment" >
+
+        <action
+            android:id="@+id/action_dogBreedImagesListFragment_to_dogBreedDetailFragment"
+            app:destination="@id/dogBreedDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dogBreedDetailFragment"
+        android:name="com.example.dogapiapp.requirement3.ui.DogBreedDetailFragment"
+        android:label="DogBreedDetailFragment">
+
+        <argument
+            android:name="dog_breed_id"
+            app:argType="integer"
+            android:defaultValue="0"/>
+    </fragment>
 </navigation>

@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.dogapiapp.data.local.model.DogBreedDbModel
 import com.example.dogapiapp.data.local.model.DogBreedRemoteKeys
+import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface DogBreedDao {
@@ -19,6 +20,9 @@ interface DogBreedDao {
 
     @Query("select * from dog_breeds")
     fun getDogBreedsFromDbWithoutPaging(): List<DogBreedDbModel>
+
+    @Query("select * from dog_breeds where id = :id")
+    fun getDogBreedById(id: Int): Single<DogBreedDbModel>
 
     @Query("delete from dog_breeds")
     fun deleteAllDogBreeds()

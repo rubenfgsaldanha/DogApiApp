@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id "androidx.navigation.safeargs"
+    id "androidx.navigation.safeargs.kotlin"
     id 'kotlin-android-extensions'
     id 'com.google.dagger.hilt.android'
 }
@@ -63,9 +63,13 @@ dependencies {
     implementation "androidx.room:room-runtime:$version_room"
     implementation "androidx.room:room-ktx:$version_room"
     implementation "androidx.room:room-paging:$version_room_paging"
+    implementation "androidx.room:room-rxjava3:$version_room_rxjava"
     kapt "androidx.room:room-compiler:$version_room"
 
     implementation "io.reactivex.rxjava3:rxjava:$version_rxjava"
+    implementation "io.reactivex.rxjava3:rxandroid:$version_rxjava_android"
+
+    implementation "com.github.pedrovgs:renderers:$version_renderers"
 
     implementation "androidx.paging:paging-runtime:$version_paging"
     implementation "androidx.paging:paging-rxjava2:$version_paging"

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.dogapiapp.common.extensions.hide
 import com.example.dogapiapp.databinding.DogBreedImageItemGridBinding
 import com.example.dogapiapp.databinding.DogBreedImageItemLinearBinding
 import com.example.dogapiapp.requirement1.model.DogBreedUiModel
@@ -66,7 +67,9 @@ class DogBreedImagesAdapter(
 
         fun bind(item: DogBreedUiModel?){
             item?.let {
-                binding.breedName.text = item.name
+                item.name?.let {
+                    binding.breedName.text = item.name
+                } ?: binding.breedName.hide()
 
                 binding.root.setOnClickListener { onItemClick(item.id) }
 
