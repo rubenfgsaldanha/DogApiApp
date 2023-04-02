@@ -16,13 +16,29 @@ class DogBreedSearchViewModel @Inject constructor(
     private val performSearchUseCase: PerformSearchUseCase,
 ): ViewModel() {
 
-    fun getDogBreeds(): Single<List<DogBreedSearchUiModel>> {
-        return getDogBreedsForSearchUseCase()
+    var currentFilteredResults: List<DogBreedSearchUiModel> = emptyList()
+    lateinit var allDogBreeds: Single<List<DogBreedSearchUiModel>>
+    var shouldShowAllDogBreeds = true
+
+    init {
+        getDogBreeds()
+    }
+
+    private fun getDogBreeds() {
+        allDogBreeds = getDogBreedsForSearchUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                if(shouldShowAllDogBreeds) {
+                    currentFilteredResults = it
+                }
+                it
+            }
     }
 
     fun performSearch(text: CharSequence, list: List<DogBreedSearchUiModel>): List<DogBreedSearchUiModel> {
-        return performSearchUseCase(text.toString(), list)
+        shouldShowAllDogBreeds = false
+        currentFilteredResults = performSearchUseCase(text.toString(), list)
+        return currentFilteredResults
     }
 }

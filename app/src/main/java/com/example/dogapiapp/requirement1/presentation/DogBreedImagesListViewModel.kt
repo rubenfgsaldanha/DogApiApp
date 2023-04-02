@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.rxjava3.cachedIn
+import com.example.dogapiapp.requirement1.adapter.LINEAR_LAYOUT
 import com.example.dogapiapp.requirement1.domain.GetDogBreedsWithPaginationUseCase
 import com.example.dogapiapp.requirement1.domain.OrderDogBreedAlphabeticallyUseCase
 import com.example.dogapiapp.requirement1.domain.OrderType
@@ -21,6 +22,8 @@ class DogBreedImagesListViewModel @Inject constructor(
     private val getDogBreedsWithPaginationUseCase: GetDogBreedsWithPaginationUseCase,
     private val orderDogBreedAlphabeticallyUseCase: OrderDogBreedAlphabeticallyUseCase,
 ): ViewModel() {
+
+    var currentLayout = LINEAR_LAYOUT
 
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getDogBreeds(): Flowable<PagingData<DogBreedUiModel>> {

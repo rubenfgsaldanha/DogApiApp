@@ -40,20 +40,20 @@ class DogBreedImagesListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DogBreedImagesAdapter(LINEAR_LAYOUT) {
+        adapter = DogBreedImagesAdapter(viewModel.currentLayout) {
             findNavController().navigate(
                 DogBreedImagesListFragmentDirections.actionDogBreedImagesListFragmentToDogBreedDetailFragment(dogBreedId = it)
             )
         }
 
-        updateAdapterAndLayoutType(LINEAR_LAYOUT)
+        updateAdapterAndLayoutType(viewModel.currentLayout)
         binding.dogBreedImages.adapter = adapter
 
         setupClickListeners()
     }
 
     private fun updateAdapterAndLayoutType(layoutType: Int) {
-        // TODO improve this to survive configuration changes
+        viewModel.currentLayout = layoutType
         binding.dogBreedImages.layoutManager = if (layoutType == LINEAR_LAYOUT) {
             LinearLayoutManager(requireContext())
         } else {

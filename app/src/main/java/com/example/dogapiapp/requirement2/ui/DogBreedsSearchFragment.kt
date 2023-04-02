@@ -37,29 +37,6 @@ class DogBreedsSearchFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        mDisposable.add(
-            viewModel.getDogBreeds().subscribe(
-                { dogBreads ->
-                    binding.searchResults.adapter = DogBreedSearchResultsAdapter(
-                        totalDogBreeds = dogBreads,
-                        currentFilteredResults = dogBreads,
-                        performSearch = { text, list ->
-                            viewModel.performSearch(text, list)
-                        },
-                        onItemClick = {
-                            findNavController().navigate(
-                                DogBreedsSearchFragmentDirections.actionDogBreedsSearchFragmentToDogBreedDetailFragment(dogBreedId = it)
-                            )
-                        }
-                    )
-                },
-                { error ->
-                    //
-                }
-            )
-        )
-
         setupSearchBar()
     }
 
@@ -88,5 +65,36 @@ class DogBreedsSearchFragment: Fragment() {
     private fun hideKeyboard() {
         val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.searchBar.editText.windowToken, 0)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        mDisposable.add(
+            viewModel.allDogBreeds.subscribe(
+                { dogBreads ->
+                    binding.searchResults.adapter = DogBreedSearchResultsAdapter(
+                        totalDogBreeds = dogBreads,
+                        currentFilteredResults = viewModel.currentFilteredResults,
+                        performSearch = { text, list ->
+                            viewModel.performSearch(text, list)
+                        },
+                        onItemClick = {
+                            findNavController().navigate(
+                                DogBreedsSearchFragmentDirections.actionDogBreedsSearchFragmentToDogBreedDetailFragment(dogBreedId = it)
+                            )
+                        }
+                    )
+                },
+                { error ->
+                    //
+                }
+            )
+        )
+    }
+
+    override fun onStop() {
+        mDisposable.clear()
+        super.onStop()
     }
 }
