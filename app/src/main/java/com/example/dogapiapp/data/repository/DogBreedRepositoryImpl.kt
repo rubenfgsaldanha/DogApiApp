@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import com.example.dogapiapp.data.local.dao.DogBreedDao
 import com.example.dogapiapp.data.local.model.DogBreedDbModel
 import com.example.dogapiapp.data.remote.remotedatasource.DogBreedsRemoteDataSource
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
@@ -25,8 +25,17 @@ class DogBreedRepositoryImpl @Inject constructor(
         return dogBreedDao.getDogBreedById(id)
     }
 
-    override fun getAllDogBreedsWithoutPagination(): List<DogBreedDbModel> {
+    override fun getAllDogBreedsWithoutPaginationFromDb(): List<DogBreedDbModel> {
         return dogBreedDao.getDogBreedsFromDbWithoutPaging()
+    }
+
+    override fun getAllDogBreedsWithoutPagination(): Single<List<DogBreedDbModel>> {
+        return dataSource.getDogBreedsWithoutPagination()
+            .map {
+                dogBreedDao.deleteAllDogBreeds()
+                dogBreedDao.insertAll(it)
+                it
+            }
     }
 
     override fun deleteAllDogBreeds() {

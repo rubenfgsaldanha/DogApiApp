@@ -13,8 +13,6 @@ class DogBreedDetailRenderer: Renderer<DogBreedDetailUiModel>() {
 
     private lateinit var binding: DogBreedDetailItemBinding
 
-    val thisIsATest = 12
-
     override fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
         binding = DogBreedDetailItemBinding.inflate(inflater, parent, false)
         return binding.root

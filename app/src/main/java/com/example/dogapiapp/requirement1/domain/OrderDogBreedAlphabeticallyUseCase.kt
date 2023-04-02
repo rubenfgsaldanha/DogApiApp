@@ -8,7 +8,7 @@ class OrderDogBreedAlphabeticallyUseCase @Inject constructor(
 ) {
 
     operator fun invoke(orderType: OrderType) {
-        val items = repository.getAllDogBreedsWithoutPagination()
+        val items = repository.getAllDogBreedsWithoutPaginationFromDb()
 
         val reversedItems = if (orderType == OrderType.DESC) {
             items.sortedBy { it.name }

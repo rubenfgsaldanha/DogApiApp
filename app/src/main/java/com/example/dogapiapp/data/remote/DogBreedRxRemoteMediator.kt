@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
-import androidx.paging.rxjava2.RxRemoteMediator
+import androidx.paging.rxjava3.RxRemoteMediator
 import com.example.dogapiapp.BuildConfig
 import com.example.dogapiapp.data.local.DogBreedDatabase
 import com.example.dogapiapp.data.local.model.DogBreedDbModel
@@ -12,8 +12,8 @@ import com.example.dogapiapp.data.local.model.DogBreedRemoteKeys
 import com.example.dogapiapp.data.local.toDogBreedDbModel
 import com.example.dogapiapp.data.local.toDogBreedDbModelList
 import com.example.dogapiapp.data.remote.api.DogApi
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.io.InvalidObjectException
 
 @OptIn(ExperimentalPagingApi::class)
@@ -64,7 +64,7 @@ class DogBreedRxRemoteMediator constructor(
                     )
                     val headers = hashMapOf("x-api-key" to BuildConfig.API_KEY)
 
-                    dogApi.getDogBreeds(url, headers, queryParams)
+                    dogApi.getDogBreedsWithPagination(url, headers, queryParams)
                         .map<MediatorResult> { response ->
                             val endOfPaginationReached = response.isEmpty()
                             lastItemOfCurrentPage = response.last().toDogBreedDbModel()

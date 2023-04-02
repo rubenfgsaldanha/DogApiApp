@@ -6,6 +6,6 @@ import javax.inject.Inject
 class PerformSearchUseCase @Inject constructor() {
 
     operator fun invoke(text: String, list: List<DogBreedSearchUiModel>): List<DogBreedSearchUiModel> {
-        return list.filter { it.breedName?.contains(text) == true }
+        return list.filter { it.breedName?.lowercase()?.contains(text) == true }
     }
 }

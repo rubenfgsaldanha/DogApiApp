@@ -33,6 +33,9 @@ interface DogBreedDao {
     @Query("select * from dog_breeds_remote_keys where id = :id")
     fun getDogBreedRemoteKeyById(id: Int): DogBreedRemoteKeys?
 
+    @Query("select * from dog_breeds_remote_keys order by id desc limit 1")
+    fun getLastDogBreedRemoteKey(): DogBreedRemoteKeys?
+
     @Query("delete from dog_breeds_remote_keys")
     fun deleteAllRemoteKeys()
 }

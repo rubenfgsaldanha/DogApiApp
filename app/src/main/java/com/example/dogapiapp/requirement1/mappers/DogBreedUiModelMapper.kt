@@ -1,4 +1,4 @@
-package com.example.dogapiapp.requirement1.presentation
+package com.example.dogapiapp.requirement1.mappers
 
 import androidx.paging.PagingData
 import androidx.paging.map

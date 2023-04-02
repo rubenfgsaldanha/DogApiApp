@@ -1,7 +1,6 @@
 package com.example.dogapiapp.requirement3.domain
 
 import com.example.dogapiapp.data.repository.DogBreedRepository
-import com.example.dogapiapp.requirement1.model.DogBreedUiModel
 import com.example.dogapiapp.requirement3.mappers.toDogBreedDetailUiModel
 import com.example.dogapiapp.requirement3.model.DogBreedDetailUiModel
 import io.reactivex.rxjava3.core.Single

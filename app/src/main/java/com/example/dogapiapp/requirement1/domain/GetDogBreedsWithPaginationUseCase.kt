@@ -2,9 +2,9 @@ package com.example.dogapiapp.requirement1.domain
 
 import androidx.paging.PagingData
 import com.example.dogapiapp.data.repository.DogBreedRepository
+import com.example.dogapiapp.requirement1.mappers.toPagingDataUiModel
 import com.example.dogapiapp.requirement1.model.DogBreedUiModel
-import com.example.dogapiapp.requirement1.presentation.toPagingDataUiModel
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
 class GetDogBreedsWithPaginationUseCase @Inject constructor(

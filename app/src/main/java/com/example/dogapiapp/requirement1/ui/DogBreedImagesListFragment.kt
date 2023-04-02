@@ -17,7 +17,7 @@ import com.example.dogapiapp.requirement1.adapter.LINEAR_LAYOUT
 import com.example.dogapiapp.requirement1.domain.OrderType
 import com.example.dogapiapp.requirement1.presentation.DogBreedImagesListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 @AndroidEntryPoint
 class DogBreedImagesListFragment: Fragment() {
