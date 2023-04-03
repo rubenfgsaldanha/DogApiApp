@@ -18,15 +18,10 @@ class DogBreedSearchViewModel @Inject constructor(
 ): ViewModel() {
 
     var currentFilteredResults: List<DogBreedSearchUiModel> = emptyList()
-    lateinit var allDogBreeds: Single<List<DogBreedSearchUiModel>>
     var shouldShowAllDogBreeds = true
 
-    init {
-        getDogBreeds()
-    }
-
-    private fun getDogBreeds() {
-        allDogBreeds = getDogBreedsForSearchUseCase()
+    val allDogBreeds: Single<List<DogBreedSearchUiModel>> by lazy {
+        getDogBreedsForSearchUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { repoResult ->
