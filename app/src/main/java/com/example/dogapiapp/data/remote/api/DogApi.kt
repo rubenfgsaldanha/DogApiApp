@@ -21,5 +21,5 @@ interface DogApi {
     fun getDogBreedsWithoutPagination(
         @Url url: String,
         @HeaderMap headers: Map<String, String>,
-    ): Single<Response<List<DogBreedDto>>>
+    ): Single<List<DogBreedDto>>
 }

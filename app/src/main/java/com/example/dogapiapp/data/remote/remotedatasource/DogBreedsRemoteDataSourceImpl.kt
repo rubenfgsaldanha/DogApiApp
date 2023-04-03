@@ -8,7 +8,6 @@ import androidx.paging.rxjava3.flowable
 import com.example.dogapiapp.BuildConfig
 import com.example.dogapiapp.data.local.DogBreedDatabase
 import com.example.dogapiapp.data.local.model.DogBreedDbModel
-import com.example.dogapiapp.data.remote.ApiPerformer
 import com.example.dogapiapp.data.remote.ApiResult
 import com.example.dogapiapp.data.remote.DogBreedRxRemoteMediator
 import com.example.dogapiapp.data.remote.api.DogApi
@@ -45,14 +44,12 @@ class DogBreedsRemoteDataSourceImpl @Inject constructor(
         val url = BuildConfig.BASE_URL_DOG_API.plus(BREEDS_ENDPOINT)
         val headers = hashMapOf("x-api-key" to BuildConfig.API_KEY)
 
-        return ApiPerformer<List<DogBreedDto>>().run {
-            dogApi.getDogBreedsWithoutPagination(url, headers)
-                .map {
-                    getResult(it)
-                }
-                .onErrorReturn {
-                    ApiResult.Error(it.message.toString())
-                }
-        }
+        return dogApi.getDogBreedsWithoutPagination(url, headers)
+            .map<ApiResult<List<DogBreedDto>>> {
+                ApiResult.Success(it)
+            }
+            .onErrorReturn {
+                ApiResult.Error(it.message.toString())
+            }
     }
 }
