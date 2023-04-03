@@ -79,6 +79,10 @@ dependencies {
 
     implementation "org.assertj:assertj-core:$version_assertj"
     testImplementation "junit:junit:$version_junit"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$version_mockito"
+    testImplementation "org.mockito:mockito-inline:$version_mockito_inline"
+    testImplementation "org.robolectric:robolectric:$version_roboeletric"
+    testImplementation "androidx.arch.core:core-testing:$Version_androidx_core_tesing"
     androidTestImplementation "androidx.test.ext:junit:$version_junit_ext"
     androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso"
 }

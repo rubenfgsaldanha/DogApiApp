@@ -175,6 +175,12 @@ object DogBreedsBuilder {
             width = IMAGE_WIDTH,
         )
 
+    internal fun aDogBreedUiModelList() =
+        listOf(
+            aDogBreedUiModel(),
+            aDogBreedUiModel().copy(name = NAME.plus(1), imageUrl = null)
+        )
+
     internal fun aDogBreedUiModel() =
         DogBreedUiModel(
             id = ID,
@@ -191,13 +197,15 @@ object DogBreedsBuilder {
                 breedGroup = BREED_GROUP,
                 origin = ORIGIN,
             ),
-            DogBreedSearchUiModel(
-                id = ID.plus(1),
-                breedName = NAME.plus("1"),
-                breedGroup = BREED_GROUP,
-                origin = null,
-            ),
+            aDogBreedSearchUiModel(),
         )
+
+    internal fun aDogBreedSearchUiModel() = DogBreedSearchUiModel(
+        id = ID.plus(1),
+        breedName = NAME.plus("1"),
+        breedGroup = BREED_GROUP,
+        origin = null,
+    )
 
     internal fun aDogBreedDetailUiModel() =
         DogBreedDetailUiModel(

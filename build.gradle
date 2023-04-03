@@ -20,9 +20,13 @@ buildscript {
         version_paging = "3.1.1"
         version_glide = "4.15.1"
         version_assertj = "3.21.0"
+        version_mockito = "4.1.0"
+        version_mockito_inline = "3.11.2"
         version_junit = "4.13.2"
         version_junit_ext = "1.1.5"
         version_espresso="3.5.1"
+        Version_androidx_core_tesing = "2.2.0"
+        version_roboeletric = "4.6.1"
     }
     repositories {
         google()

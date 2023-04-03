@@ -66,13 +66,16 @@ class DogBreedRxRemoteMediator constructor(
 
                     dogApi.getDogBreedsWithPagination(url, headers, queryParams)
                         .map<MediatorResult> { response ->
-                            val endOfPaginationReached = response.isEmpty()
-                            lastItemOfCurrentPage = response.last().toDogBreedDbModel()
+                            if (response.isEmpty()) {
+                                updateLastRemoteKey()
+                                MediatorResult.Success(endOfPaginationReached = true)
+                            } else {
+                                lastItemOfCurrentPage = response.last().toDogBreedDbModel()
+                                val dbModel = response.toDogBreedDbModelList()
+                                insertToDb(page, loadType, dbModel)
 
-                            val dbModel = response.toDogBreedDbModelList()
-                            insertToDb(page, loadType, dbModel, endOfPaginationReached)
-
-                            MediatorResult.Success(endOfPaginationReached)
+                                MediatorResult.Success(endOfPaginationReached = false)
+                            }
                         }
                         .onErrorReturn { MediatorResult.Error(it) }
                 }
@@ -84,7 +87,6 @@ class DogBreedRxRemoteMediator constructor(
         page: Int,
         loadType: LoadType,
         data: List<DogBreedDbModel>,
-        endOfPagination: Boolean
     ): List<DogBreedDbModel> {
         database.runInTransaction {
             if (loadType == LoadType.REFRESH) {
@@ -93,7 +95,7 @@ class DogBreedRxRemoteMediator constructor(
             }
 
             val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
-            val nextKey = if (endOfPagination) null else page + 1
+            val nextKey = page + 1
             val keys = data.map {
                 DogBreedRemoteKeys(id = it.id, previousKey = prevKey, nextKey = nextKey)
             }
@@ -105,7 +107,14 @@ class DogBreedRxRemoteMediator constructor(
         return data
     }
 
-    private fun getRemoteKeyForLastItem(): DogBreedRemoteKeys? {
+    private fun updateLastRemoteKey() {
+        val lastKey = getRemoteKeyForLastItem()
+        lastKey?.let {
+            database.dogBreedDao().insertAllRemoteKeys(listOf(lastKey.copy(nextKey = null)))
+        }
+    }
+
+    fun getRemoteKeyForLastItem(): DogBreedRemoteKeys? {
         return lastItemOfCurrentPage?.id?.let {
             database.dogBreedDao().getDogBreedRemoteKeyById(it)
         }

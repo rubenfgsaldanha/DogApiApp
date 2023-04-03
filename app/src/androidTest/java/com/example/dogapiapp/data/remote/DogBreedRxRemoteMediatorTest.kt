@@ -7,6 +7,7 @@ import com.example.dogapiapp.data.local.DogBreedDatabase
 import com.example.dogapiapp.data.local.model.DogBreedDbModel
 import com.example.dogapiapp.data.remote.api.MockDogApiForPagination
 import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -19,6 +20,19 @@ class DogBreedRxRemoteMediatorTest {
         ApplicationProvider.getApplicationContext(),
         useInMemory = true
     )
+    private lateinit var remoteMediator: DogBreedRxRemoteMediator
+    private lateinit var pagingState: PagingState<Int, DogBreedDbModel>
+
+    @Before
+    fun setup() {
+        remoteMediator = DogBreedRxRemoteMediator(mockDb, mockApi)
+        pagingState = PagingState(
+            pages = listOf(),
+            anchorPosition = null,
+            config = PagingConfig(3),
+            leadingPlaceholderCount = 3
+        )
+    }
 
     @After
     fun tearDown(){
@@ -29,14 +43,6 @@ class DogBreedRxRemoteMediatorTest {
     fun refreshLoadReturnsSuccessResultWhenMoreDataIsPresent() {
         mockApi.throwException = false
         mockApi.returnEmptyList = false
-        val remoteMediator = DogBreedRxRemoteMediator(mockDb, mockApi)
-
-        val pagingState = PagingState<Int, DogBreedDbModel>(
-            pages = listOf(),
-            anchorPosition = null,
-            config = PagingConfig(3),
-            leadingPlaceholderCount = 3
-        )
 
         remoteMediator.loadSingle(LoadType.REFRESH, pagingState)
             .test()
@@ -44,6 +50,34 @@ class DogBreedRxRemoteMediatorTest {
             .assertValueCount(1)
             .assertValue { value ->
                 value is RemoteMediator.MediatorResult.Success && !value.endOfPaginationReached
+            }
+    }
+
+    @Test
+    fun refreshLoadSuccessAndEndOfPaginationWhenNoMoreData() {
+        mockApi.throwException = false
+        mockApi.returnEmptyList = true
+
+        remoteMediator.loadSingle(LoadType.REFRESH, pagingState)
+            .test()
+            .await()
+            .assertValueCount(1)
+            .assertValue { value ->
+                value is RemoteMediator.MediatorResult.Success && value.endOfPaginationReached
+            }
+    }
+
+    @Test
+    fun refreshLoadReturnsErrorResultWhenErrorOccurs() {
+        mockApi.throwException = true
+        mockApi.returnEmptyList = false
+
+        remoteMediator.loadSingle(LoadType.REFRESH, pagingState)
+            .test()
+            .await()
+            .assertValueCount(1)
+            .assertValue { value ->
+                value is RemoteMediator.MediatorResult.Error
             }
     }
 }
