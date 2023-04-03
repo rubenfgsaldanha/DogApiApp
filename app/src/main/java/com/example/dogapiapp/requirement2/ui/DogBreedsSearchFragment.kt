@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -87,7 +88,7 @@ class DogBreedsSearchFragment: Fragment() {
                     )
                 },
                 { error ->
-                    //
+                    Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
                 }
             )
         )

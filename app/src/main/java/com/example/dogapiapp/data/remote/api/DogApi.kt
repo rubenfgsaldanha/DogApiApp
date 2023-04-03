@@ -2,6 +2,7 @@ package com.example.dogapiapp.data.remote.api
 
 import com.example.dogapiapp.data.remote.dto.DogBreedDto
 import io.reactivex.rxjava3.core.Single
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
 import retrofit2.http.QueryMap
@@ -20,5 +21,5 @@ interface DogApi {
     fun getDogBreedsWithoutPagination(
         @Url url: String,
         @HeaderMap headers: Map<String, String>,
-    ): Single<List<DogBreedDto>>
+    ): Single<Response<List<DogBreedDto>>>
 }

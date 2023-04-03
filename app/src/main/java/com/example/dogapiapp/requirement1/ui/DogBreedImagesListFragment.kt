@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -86,9 +87,14 @@ class DogBreedImagesListFragment: Fragment() {
         super.onStart()
 
         mDisposable.add(
-            viewModel.getDogBreeds().subscribe {
-                adapter.submitData(lifecycle, it)
-            }
+            viewModel.getDogBreeds().subscribe(
+                {
+                    adapter.submitData(lifecycle, it)
+                },
+                { error ->
+                    Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+                }
+            )
         )
     }
 

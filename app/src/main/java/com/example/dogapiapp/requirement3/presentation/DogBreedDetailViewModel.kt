@@ -1,6 +1,7 @@
 package com.example.dogapiapp.requirement3.presentation
 
 import androidx.lifecycle.ViewModel
+import com.example.dogapiapp.data.repository.RepoResult
 import com.example.dogapiapp.requirement3.domain.GetDogBreedDetailUseCase
 import com.example.dogapiapp.requirement3.model.DogBreedDetailUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,5 +21,15 @@ class DogBreedDetailViewModel @Inject constructor(
         return getDogBreedDetailUseCase(dogBreedId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .map { repoResult ->
+                when (repoResult) {
+                    is RepoResult.Success -> repoResult.data
+                    is RepoResult.Saved -> repoResult.data
+                    is RepoResult.Error -> throw Exception()
+                }
+            }
+            .onErrorReturn {
+                throw Exception()
+            }
     }
 }

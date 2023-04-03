@@ -8,9 +8,11 @@ import androidx.paging.rxjava3.flowable
 import com.example.dogapiapp.BuildConfig
 import com.example.dogapiapp.data.local.DogBreedDatabase
 import com.example.dogapiapp.data.local.model.DogBreedDbModel
-import com.example.dogapiapp.data.local.toDogBreedDbModelList
+import com.example.dogapiapp.data.remote.ApiPerformer
+import com.example.dogapiapp.data.remote.ApiResult
 import com.example.dogapiapp.data.remote.DogBreedRxRemoteMediator
 import com.example.dogapiapp.data.remote.api.DogApi
+import com.example.dogapiapp.data.remote.dto.DogBreedDto
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
@@ -39,13 +41,18 @@ class DogBreedsRemoteDataSourceImpl @Inject constructor(
         ).flowable
     }
 
-    override fun getDogBreedsWithoutPagination(): Single<List<DogBreedDbModel>> {
+    override fun getDogBreedsWithoutPagination(): Single<ApiResult<List<DogBreedDto>>> {
         val url = BuildConfig.BASE_URL_DOG_API.plus(BREEDS_ENDPOINT)
         val headers = hashMapOf("x-api-key" to BuildConfig.API_KEY)
 
-        return dogApi.getDogBreedsWithoutPagination(url, headers)
-            .map {
-                it.toDogBreedDbModelList()
-            }
+        return ApiPerformer<List<DogBreedDto>>().run {
+            dogApi.getDogBreedsWithoutPagination(url, headers)
+                .map {
+                    getResult(it)
+                }
+                .onErrorReturn {
+                    ApiResult.Error(it.message.toString())
+                }
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.dogapiapp.requirement2.presentation
 
 import androidx.lifecycle.ViewModel
+import com.example.dogapiapp.data.repository.RepoResult
 import com.example.dogapiapp.requirement2.domain.GetDogBreedsForSearchUseCase
 import com.example.dogapiapp.requirement2.domain.PerformSearchUseCase
 import com.example.dogapiapp.requirement2.model.DogBreedSearchUiModel
@@ -28,11 +29,19 @@ class DogBreedSearchViewModel @Inject constructor(
         allDogBreeds = getDogBreedsForSearchUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map {
-                if(shouldShowAllDogBreeds) {
-                    currentFilteredResults = it
+            .map { repoResult ->
+                val results = when (repoResult) {
+                    is RepoResult.Success -> repoResult.data
+                    is RepoResult.Saved -> repoResult.data
+                    is RepoResult.Error -> throw Exception()
                 }
-                it
+                if(shouldShowAllDogBreeds) {
+                    currentFilteredResults = results
+                }
+                results
+            }
+            .onErrorReturn {
+                throw Exception()
             }
     }
 
